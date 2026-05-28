@@ -45,7 +45,7 @@ export default function AdminLayout({
           <Link href="/" className="flex flex-col items-start px-2 py-3">
             <span className="text-lg font-bold tracking-widest text-white flex items-center gap-1.5 uppercase">
               <Gem className="h-5 w-5 text-gold-500" />
-              SHIVAYE <span className="text-gold-500">JEWELS</span>
+              RADHA <span className="text-gold-500">JEWELS</span>
             </span>
             <span className="text-[9px] tracking-widest text-slate-500 uppercase mt-0.5">Admin Management</span>
           </Link>

@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-sans)', 'sans-serif'],
+        serif: ['var(--font-serif)', 'serif'],
+      },
       colors: {
         gold: {
           50: '#FDFBF7',
@@ -15,14 +19,15 @@ const config: Config = {
           200: '#F2E5BA',
           300: '#E7D187',
           400: '#DCBE5B',
-          500: '#D4AF37', // Premium Gold Color
-          600: '#B69228',
-          700: '#8F711E',
-          800: '#695116',
-          900: '#4D3A10',
+          500: '#ab8c52', // Muted Brand Gold (Radha)
+          600: '#806430', // Brand Gold Hover (Radha)
+          700: '#6d5427',
+          800: '#523f1c',
+          900: '#382a12',
+          light: '#f5f2ec',
         },
         slate: {
-          950: '#030712',
+          950: '#212121', // Dark Charcoal (Radha)
         },
       },
     },

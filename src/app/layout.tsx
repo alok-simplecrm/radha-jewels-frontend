@@ -1,11 +1,21 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Cardo, Figtree } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const figtree = Figtree({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+});
+
+const cardo = Cardo({ 
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-serif',
+});
 
 export const metadata = {
-  title: 'Shivaye Jewels | Premium & Custom Jewelry Platform',
-  description: 'Buy SHIVAYE JEWELS products online at best prices. Explore gold rings, necklaces, diamonds and bespoke jewelry catalog.',
+  title: 'Radha Jewels | Premium Demi-Fine Jewellery Online',
+  description: 'Radha Jewels offers demi-fine jewellery that combines quality and design. Find handcrafted, everyday pieces that suit modern, minimalist style.',
 };
 
 export default function RootLayout({
@@ -14,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={`${figtree.variable} ${cardo.variable}`}>
+      <body className="font-sans antialiased bg-[#fcfbf9] text-[#212121]">
         {children}
       </body>
     </html>

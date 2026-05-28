@@ -55,7 +55,7 @@ export default function LoginPage() {
           <Link href="/" className="inline-flex flex-col items-center gap-2 mb-4">
             <Gem className="h-8 w-8 text-gold-500" />
             <span className="text-2xl font-bold tracking-widest text-white uppercase">
-              SHIVAYE <span className="text-gold-500">JEWELS</span>
+              RADHA <span className="text-gold-500">JEWELS</span>
             </span>
           </Link>
           <h2 className="text-xl font-bold text-white">

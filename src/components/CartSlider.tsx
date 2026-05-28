@@ -9,18 +9,16 @@ export default function CartSlider() {
   const { user } = useAuthStore();
   const { items, subtotal, isOpen, toggleOpen, updateQuantity, removeItem } = useCartStore();
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div className={`fixed inset-0 z-50 overflow-hidden transition-all duration-300 ${isOpen ? 'visible' : 'invisible pointer-events-none'}`}>
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
+        className={`absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
         onClick={() => toggleOpen(false)}
       />
 
       <div className="absolute inset-y-0 right-0 flex max-w-full pl-10">
-        <div className="w-screen max-w-md transform bg-white shadow-2xl transition-transform duration-300 ease-in-out">
+        <div className={`w-screen max-w-md transform bg-white shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex h-full flex-col justify-between">
             
             {/* Header */}
@@ -36,6 +34,27 @@ export default function CartSlider() {
                 <X className="h-5 w-5" />
               </button>
             </div>
+
+            {/* Free Shipping Progress Bar */}
+            {user && items.length > 0 && (
+              <div className="border-b border-slate-100 bg-[#fdfbf7] px-6 py-4">
+                {subtotal >= 1999 ? (
+                  <p className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+                    ✨ Congratulations! You've unlocked <strong className="text-gold-500 font-bold">Free Shipping</strong>!
+                  </p>
+                ) : (
+                  <p className="text-xs font-semibold text-slate-700">
+                    You are only <strong className="text-gold-500 font-bold">₹{1999 - subtotal}</strong> away from <strong className="text-slate-900 font-bold">Free Shipping</strong>!
+                  </p>
+                )}
+                <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-200 overflow-hidden">
+                  <div
+                    className="h-full bg-gold-500 transition-all duration-500 ease-out"
+                    style={{ width: `${Math.min((subtotal / 1999) * 100, 100)}%` }}
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Items List */}
             <div className="flex-1 overflow-y-auto px-6 py-4">

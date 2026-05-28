@@ -3,12 +3,14 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Filter } from 'lucide-react';
+import Link from 'next/link';
 import apiClient from '@/lib/api-client';
 import { useCartStore } from '@/store/useCartStore';
 
 interface Product {
   id: string;
   name: string;
+  slug: string;
   price: number;
   discountPrice?: number;
   SKU: string;
@@ -20,7 +22,7 @@ interface Product {
 function ProductsPageContent() {
   const searchParams = useSearchParams();
   const search = searchParams.get('search') || '';
-  const initialCategoryId = searchParams.get('categoryId') || '';
+  const initialCategoryId = searchParams.get('categoryId') || searchParams.get('categoryid') || '';
   const initialIsFeatured = searchParams.get('isFeatured') === 'true';
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -41,10 +43,10 @@ function ProductsPageContent() {
         setCategories(res.data || []);
       } catch (err) {
         setCategories([
-          { id: 'rings', name: 'Rings' },
           { id: 'necklaces', name: 'Necklaces' },
           { id: 'earrings', name: 'Earrings' },
           { id: 'bracelets', name: 'Bracelets' },
+          { id: 'rings', name: 'Rings' },
         ]);
       }
     }
@@ -71,15 +73,15 @@ function ProductsPageContent() {
       } catch (err) {
         // Fallback mock data if server isn't running yet
         const mockProducts = [
-          { id: '1', name: 'Solitaire Diamond Engagement Ring', price: 85000, discountPrice: 79999, SKU: 'RING-SL-01', stockQuantity: 10, category: { id: 'rings' }, images: ['/images/solitaire-ring.png'] },
-          { id: '2', name: 'Classic Gold Halo Pendant Necklace', price: 42000, SKU: 'NECK-HALO-02', stockQuantity: 5, category: { id: 'necklaces' }, images: ['/images/halo-necklace.png'] },
-          { id: '3', name: 'Bespoke Emerald Cut Diamond Earrings', price: 95000, discountPrice: 89999, SKU: 'EAR-EM-03', stockQuantity: 4, category: { id: 'earrings' }, images: ['/images/emerald-earrings.png'] },
-          { id: '4', name: 'Infinite Gold Band Ring', price: 18000, SKU: 'RING-INF-04', stockQuantity: 12, category: { id: 'rings' }, images: ['/images/infinite-band.png'] },
+          { id: '1', name: 'Emily Flower Earrings', slug: 'emily-flower-earrings', price: 2500, discountPrice: 1850, SKU: 'TAA-EMILY-EAR', stockQuantity: 10, category: { id: 'earrings', slug: 'earrings' }, images: ['https://cdn.shopify.com/s/files/1/0906/2527/8230/files/rn-image_picker_lib_temp_b2465c2a-0c07-4b72-9f76-84af2f97fb07.jpg?v=1770371343'] },
+          { id: '2', name: 'Sophia Zircon Necklace', slug: 'sophia-zircon-necklace', price: 2200, discountPrice: 1600, SKU: 'TAA-SOPHIA-NECK', stockQuantity: 5, category: { id: 'necklaces', slug: 'necklaces' }, images: ['https://cdn.shopify.com/s/files/1/0906/2527/8230/files/rn-image_picker_lib_temp_b3c12509-2e89-4490-9093-cd9899f7565d.jpg?v=1746131612'] },
+          { id: '3', name: 'Madison Zircon Cuff Bracelet', slug: 'madison-zircon-cuff-bracelet', price: 2500, discountPrice: 1850, SKU: 'TAA-MADISON-BRAC', stockQuantity: 4, category: { id: 'bracelets', slug: 'bracelets' }, images: ['https://cdn.shopify.com/s/files/1/0906/2527/8230/files/Polish-20241010_000706606.jpg?v=1746131672'] },
+          { id: '4', name: 'Mira Evil Eye Pearl Necklace', slug: 'mira-evil-eye-pearl-necklace', price: 2250, discountPrice: 1650, SKU: 'TAA-MIRA-NECK', stockQuantity: 12, category: { id: 'necklaces', slug: 'necklaces' }, images: ['https://cdn.shopify.com/s/files/1/0906/2527/8230/files/Polish-20241010_001233408.jpg?v=1728499465'] },
         ];
 
         let filtered = mockProducts;
         if (categoryId) {
-          filtered = filtered.filter(p => p.category.id === categoryId);
+          filtered = filtered.filter(p => p.category.id === categoryId || p.category.slug === categoryId);
         }
         if (search) {
           filtered = filtered.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
@@ -93,12 +95,12 @@ function ProductsPageContent() {
   }, [search, categoryId, minPrice, maxPrice, sortBy, sortOrder, initialIsFeatured]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 font-sans">
       <div className="flex flex-col gap-8 lg:flex-row">
         
         {/* Filters Sidebar */}
         <aside className="w-full lg:w-64 flex-shrink-0 border-b lg:border-b-0 lg:border-r border-slate-200 pb-6 lg:pb-0 lg:pr-8">
-          <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 mb-6">
+          <h2 className="text-lg font-serif font-bold text-slate-950 flex items-center gap-2 mb-6">
             <Filter className="h-5 w-5 text-gold-500" />
             Filters
           </h2>
@@ -110,7 +112,7 @@ function ProductsPageContent() {
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setCategoryId('')}
-                  className={`text-left text-sm py-1 font-medium transition-colors ${!categoryId ? 'text-gold-500 font-bold' : 'text-slate-600 hover:text-slate-950'}`}
+                  className={`text-left text-xs uppercase tracking-wider py-1 font-bold transition-colors ${!categoryId ? 'text-gold-500' : 'text-slate-600 hover:text-slate-950'}`}
                 >
                   All Collections
                 </button>
@@ -118,7 +120,7 @@ function ProductsPageContent() {
                   <button
                     key={cat.id}
                     onClick={() => setCategoryId(cat.id)}
-                    className={`text-left text-sm py-1 font-medium transition-colors ${(categoryId === cat.id || categoryId === cat.slug) ? 'text-gold-500 font-bold' : 'text-slate-600 hover:text-slate-950'}`}
+                    className={`text-left text-xs uppercase tracking-wider py-1 font-bold transition-colors ${(categoryId === cat.id || categoryId === cat.slug) ? 'text-gold-500' : 'text-slate-600 hover:text-slate-950'}`}
                   >
                     {cat.name}
                   </button>
@@ -155,14 +157,14 @@ function ProductsPageContent() {
           {/* Header Controls */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4 mb-8 gap-4">
             <div>
-              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-slate-950 tracking-wide">
                 {search ? `Search Results for "${search}"` : 'All Collections'}
               </h1>
-              <p className="text-xs text-slate-400 mt-1">{products.length} items found</p>
+              <p className="text-xs text-slate-400 mt-1 font-semibold">{products.length} items found</p>
             </div>
 
             <div className="flex items-center gap-2 self-end">
-              <span className="text-xs text-slate-400">Sort by</span>
+              <span className="text-xs text-slate-400 font-bold">Sort by</span>
               <select
                 value={`${sortBy}:${sortOrder}`}
                 onChange={(e) => {
@@ -170,7 +172,7 @@ function ProductsPageContent() {
                   setSortBy(field);
                   setSortOrder(order as 'ASC' | 'DESC');
                 }}
-                className="rounded-md border border-slate-200 px-3 py-1.5 text-xs font-semibold focus:border-gold-500 focus:outline-none bg-white text-slate-700"
+                className="rounded-md border border-slate-200 px-3 py-1.5 text-xs font-bold focus:border-gold-500 focus:outline-none bg-white text-slate-700"
               >
                 <option value="createdAt:DESC">Newest</option>
                 <option value="price:ASC">Price: Low to High</option>
@@ -186,45 +188,53 @@ function ProductsPageContent() {
             </div>
           ) : products.length === 0 ? (
             <div className="flex h-64 flex-col items-center justify-center text-center">
-              <p className="text-slate-500">No products found matching your filter criteria.</p>
+              <p className="text-slate-500 font-semibold">No products found matching your filter criteria.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-12">
               {products.map((product) => {
                 const price = product.price;
                 const hasDiscount = !!product.discountPrice;
                 const activePrice = product.discountPrice || price;
 
                 return (
-                  <div key={product.id} className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-all">
+                  <div key={product.id} className="group relative flex flex-col overflow-hidden bg-white animate-fade-in">
                     
                     {/* Image Container */}
-                    <div className="aspect-square w-full bg-slate-50 relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center">
-                      <img
-                        src={product.images?.[0] || '/images/placeholder.png'}
-                        alt={product.name}
-                        loading="lazy"
-                        className="h-full w-full object-cover object-center"
-                      />
-                    </div>
+                    <Link href={`/products/${product.slug || product.id}`}>
+                      <div className="aspect-square w-full bg-slate-50 relative overflow-hidden rounded-xl group-hover:shadow-md transition-all duration-300 flex items-center justify-center border border-slate-100">
+                        <img
+                          src={product.images?.[0] || '/images/placeholder.png'}
+                          alt={product.name}
+                          loading="lazy"
+                          className="h-full w-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-500"
+                        />
+                        {hasDiscount && (
+                          <span className="absolute top-2 left-2 bg-red-500 text-[10px] font-bold text-white px-2 py-0.5 rounded-md">
+                            SALE
+                          </span>
+                        )}
+                      </div>
+                    </Link>
 
                     {/* Details */}
-                    <div className="flex flex-1 flex-col p-5">
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-gold-500 mb-1">FINE JEWELRY</span>
-                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-gold-500 transition-colors line-clamp-1">{product.name}</h3>
-                      <p className="mt-1 text-xs text-slate-400">SKU: {product.SKU}</p>
+                    <div className="flex flex-1 flex-col pt-4">
+                      <span className="text-[9px] uppercase font-bold tracking-widest text-slate-400 mb-1">18KT GOLD PLATED</span>
+                      <Link href={`/products/${product.slug || product.id}`}>
+                        <h3 className="font-serif text-sm font-bold text-slate-900 hover:text-gold-500 transition-colors line-clamp-1">{product.name}</h3>
+                      </Link>
                       
                       {/* Price Tag */}
-                      <div className="mt-4 flex items-baseline gap-2">
-                        <span className="text-base font-extrabold text-slate-900">₹{activePrice}</span>
+                      <div className="mt-2 flex items-baseline gap-2">
+                        <span className="text-sm font-extrabold text-slate-900 font-sans">₹{activePrice}</span>
                         {hasDiscount && (
-                          <span className="text-xs text-slate-400 line-through">₹{price}</span>
+                          <span className="text-xs text-slate-400 line-through font-sans">₹{price}</span>
                         )}
                       </div>
 
                       <button
                         onClick={() => addItem(product.id, 1)}
-                        className="mt-5 w-full rounded-full border border-gold-500 bg-transparent py-2.5 text-xs font-bold text-gold-500 hover:bg-gold-500 hover:text-white transition-all text-center"
+                        className="mt-4 w-full rounded-full border border-gold-500 bg-transparent py-2.5 text-xs font-bold text-gold-500 hover:bg-gold-500 hover:text-white transition-all text-center"
                       >
                         Add to Bag
                       </button>

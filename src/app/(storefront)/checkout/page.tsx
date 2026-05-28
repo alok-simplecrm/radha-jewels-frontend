@@ -61,7 +61,7 @@ export default function CheckoutPage() {
         <CheckCircle2 className="mx-auto h-16 w-16 text-green-500 mb-6" />
         <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Order Placed Successfully!</h1>
         <p className="mt-2 text-slate-500 text-sm">
-          Thank you for shopping with Shivaye Jewels. Your order reference is{' '}
+          Thank you for shopping with Radha Jewels. Your order reference is{' '}
           <strong className="text-slate-800">{orderSuccess.orderNumber}</strong>.
         </p>
         <div className="mt-8 flex justify-center gap-4">

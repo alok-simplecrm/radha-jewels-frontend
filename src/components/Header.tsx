@@ -49,28 +49,31 @@ export default function Header() {
           </button>
 
           {/* Logo */}
-          <Link href="/" className="flex flex-col items-start select-none">
-            <span className="text-xl font-bold tracking-widest text-slate-900 sm:text-2xl">
-              SHIVAYE <span className="text-gold-500">JEWELS</span>
+          <Link href="/" className="flex flex-col items-start select-none font-serif">
+            <span className="text-xl font-bold tracking-[0.1em] text-slate-950 sm:text-2xl uppercase">
+              RADHA
             </span>
-            <span className="text-[10px] tracking-[0.25em] text-slate-400 uppercase font-medium">Bespoke Fine Jewelry</span>
+            <span className="text-[9px] tracking-[0.35em] text-gold-500 uppercase font-sans font-semibold mt-0.5">JEWELS</span>
           </Link>
 
           {/* Navigation Links (Mega Menu style) */}
-          <nav className="hidden space-x-8 sm:flex">
-            <Link href="/products" className="text-sm font-semibold text-slate-700 hover:text-gold-500 transition-colors">
+          <nav className="hidden space-x-6 lg:space-x-8 sm:flex font-sans">
+            <Link href="/products" className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500 transition-colors">
               Collections
             </Link>
-            <Link href="/products?categoryId=rings" className="text-sm font-semibold text-slate-700 hover:text-gold-500 transition-colors">
-              Rings
-            </Link>
-            <Link href="/products?categoryId=necklaces" className="text-sm font-semibold text-slate-700 hover:text-gold-500 transition-colors">
+            <Link href="/products?categoryId=necklaces" className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500 transition-colors">
               Necklaces
             </Link>
-            <Link href="/products?categoryId=earrings" className="text-sm font-semibold text-slate-700 hover:text-gold-500 transition-colors">
+            <Link href="/products?categoryId=earrings" className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500 transition-colors">
               Earrings
             </Link>
-            <Link href="/products?isFeatured=true" className="text-sm font-semibold text-gold-500 hover:text-gold-600 transition-colors">
+            <Link href="/products?categoryId=bracelets" className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500 transition-colors">
+              Bracelets
+            </Link>
+            <Link href="/products?categoryId=rings" className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500 transition-colors">
+              Rings
+            </Link>
+            <Link href="/products?isFeatured=true" className="text-xs uppercase tracking-wider font-bold text-gold-500 hover:text-gold-600 transition-colors">
               Bestsellers ✨
             </Link>
           </nav>
@@ -190,39 +193,46 @@ export default function Header() {
             </button>
           </form>
 
-          <nav className="flex flex-col space-y-3">
+          <nav className="flex flex-col space-y-3 font-sans">
             <Link
               href="/products"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-sm font-medium text-slate-700 hover:text-gold-500"
+              className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500"
             >
               Collections
             </Link>
             <Link
-              href="/products?categoryId=rings"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-sm font-medium text-slate-700 hover:text-gold-500"
-            >
-              Rings
-            </Link>
-            <Link
               href="/products?categoryId=necklaces"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-sm font-medium text-slate-700 hover:text-gold-500"
+              className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500"
             >
               Necklaces
             </Link>
             <Link
               href="/products?categoryId=earrings"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-sm font-medium text-slate-700 hover:text-gold-500"
+              className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500"
             >
               Earrings
             </Link>
             <Link
+              href="/products?categoryId=bracelets"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500"
+            >
+              Bracelets
+            </Link>
+            <Link
+              href="/products?categoryId=rings"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-xs uppercase tracking-wider font-bold text-slate-700 hover:text-gold-500"
+            >
+              Rings
+            </Link>
+            <Link
               href="/products?isFeatured=true"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-sm font-medium text-gold-500"
+              className="text-xs uppercase tracking-wider font-bold text-gold-500"
             >
               Bestsellers ✨
             </Link>
