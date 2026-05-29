@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "public": "out",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", ".next/**"],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "rewrites": [
+      {
+        "source": "/products/**",
+        "destination": "/products/_.html"
+      }
+    ]
+  }
+}
